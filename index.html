@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <title>Clarksville Climate</title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link href="css/lib/lux.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="d-flex justify-content-center align-items-center min-vh-100">
+        
+        <div class="card col-10 col-md-6" id="divLogin" style="font-size:medium">
+            <div class="card-body">
+                <h1 class="text-center mt-2 mb-4 border-bottom pb-4">Clarksville Climate</h1>
+                
+                <div class="row align-items-center mb-3 border-bottom pb-4">
+                    <div class="col-4 fs-5">Status:</div> 
+                    <div class="col-5" id="txtCondition"></div>
+                    <div class="col-1 fs-3"><i id="iconCondition" class=""></i></div>
+                </div>
+                <div class="row align-items-center justify-content-center mb-3">
+                    <div class="col-6 text-center">
+                        <span id="txtTemperature" class="fs-3"></span>
+                        <i class="bi bi-thermometer-high text-danger  fs-3"></i>
+                    </div>
+                    <div class="col-6 text-center border-start">
+                        <span id="txtHumidity" class="fs-3"></span>
+                        <i class="bi bi-moisture text-primary fs-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="js/lib/jquery-git.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script> 
+
+        const strBaseUrl = 'https://api.open-meteo.com/v1/forecast'
+        fetch(strBaseUrl + '?latitude=36.5298&longitude=-87.3612&current=temperature_2m,relative_humidity_2m,weather_code&temperature_unit=fahrenheit')
+            .then(objResponse => {
+                if(objResponse.ok){
+                    return objResponse.json();
+                } else {
+                    throw new Error(objResponse.status)
+                }
+            })
+            .then(objData => {
+                const objWeatherCodes = {
+                    0: 'Clear skies',
+                    1: 'Mainly clear, partly cloudy, and overcast',
+                    2: 'Mainly clear, partly cloudy, and overcast',
+                    3: 'Mainly clear, partly cloudy, and overcast',
+                    45: 'Fog and depositing rime fog',
+                    48:	'Fog and depositing rime fog',
+                    51: 'Drizzle: Light, moderate, and dense intensit',
+                    53: 'Drizzle: Light, moderate, and dense intensit',
+                    55:	'Drizzle: Light, moderate, and dense intensit',
+                    56: 'Freezing Drizzle: Light and dense intensity',
+                    57:	'Freezing Drizzle: Light and dense intensity',
+                    61: 'Rain: Slight, moderate and heavy intensity',
+                    63: 'Rain: Slight, moderate and heavy intensity',
+                    65:	'Rain: Slight, moderate and heavy intensity',
+                    66: 'Freezing Rain: Light and heavy intensity',
+                    67:	'Freezing Rain: Light and heavy intensity',
+                    71: 'Snow fall: Slight, moderate, and heavy intensity',
+                    73: 'Snow fall: Slight, moderate, and heavy intensity',
+                    75:	'Snow fall: Slight, moderate, and heavy intensity',
+                    77:	'Snow grains',
+                    80: 'Rain showers: Slight, moderate, and violent',
+                    81: 'Rain showers: Slight, moderate, and violent',
+                    82:	'Rain showers: Slight, moderate, and violent',
+                    85: 'Snow showers slight and heavy',
+                    86:	'Snow showers slight and heavy',
+                    95:	'Thunderstorm: Slight or moderate',
+                    96: 'Thunderstorm with slight and heavy hail',
+                    99:	'Thunderstorm with slight and heavy hail'
+                }
+
+                // this changes the weather icon based on the weather codes
+                // so that a sun displays when is clear, for example
+                const objWeatherIcons = {
+                    0: 'bi bi-brightness-high-fill', //'Clear sky',
+                    1: 'bi bi-cloud-sun-fill', //'Mainly clear, partly cloudy, and overcast',
+                    2: 'bi bi-cloud-sun-fill', //'Mainly clear, partly cloudy, and overcast',
+                    3: 'bi bi-cloud-sun-fill', //'Mainly clear, partly cloudy, and overcast',
+                    45: 'bi bi-cloud-fog2', //'Fog and depositing rime fog',
+                    48:	'bi bi-cloud-fog2', //'Fog and depositing rime fog',
+                    51: 'bi bi-cloud-drizzle-fill', //'Drizzle: Light, moderate, and dense intensit',
+                    53: 'bi bi-cloud-drizzle-fill', //'Drizzle: Light, moderate, and dense intensit',
+                    55:	'bi bi-cloud-drizzle-fill', //'Drizzle: Light, moderate, and dense intensit',
+                    56: 'bi bi-cloud-snow-fill', //'Freezing Drizzle: Light and dense intensity',
+                    57:	'bi bi-cloud-snow-fill', //'Freezing Drizzle: Light and dense intensity',
+                    61: 'bi bi-cloud-rain-fill', //'Rain: Slight, moderate and heavy intensity',
+                    63: 'bi bi-cloud-rain-fill', //'Rain: Slight, moderate and heavy intensity',
+                    65:	'bi bi-cloud-rain-fill', //'Rain: Slight, moderate and heavy intensity',
+                    66: 'bi bi-cloud-snow-fill', //'Freezing Rain: Light and heavy intensity',
+                    67:	'bi bi-cloud-snow-fill', //'Freezing Rain: Light and heavy intensity',
+                    71: 'bi bi-cloud-snow-fill', //'Snow fall: Slight, moderate, and heavy intensity',
+                    73: 'bi bi-cloud-snow-fill', //'Snow fall: Slight, moderate, and heavy intensity',
+                    75:	'bi bi-cloud-snow-fill', //'Snow fall: Slight, moderate, and heavy intensity',
+                    77:	'bi bi-cloud-snow-fill', //'Snow grains',
+                    80: 'bi bi-cloud-rain-fill', //'Rain showers: Slight, moderate, and violent',
+                    81: 'bi bi-cloud-rain-fill', //'Rain showers: Slight, moderate, and violent',
+                    82:	'bi bi-cloud-rain-fill', //'Rain showers: Slight, moderate, and violent',
+                    85: 'bi bi-cloud-snow-fill', //'Snow showers slight and heavy',
+                    86:	'bi bi-cloud-snow-fill', //'Snow showers slight and heavy',
+                    95:	'bi bi-cloud-lightning-rain-fill', //'Thunderstorm: Slight or moderate',
+                    96: 'bi bi-cloud-lightning-rain-fill', //'Thunderstorm with slight and heavy hail',
+                    99:	'bi bi-cloud-lightning-rain-fill', //'Thunderstorm with slight and heavy hail'
+                }
+
+                const current = objData.current
+                const strIconClass = objWeatherIcons[current.weather_code]
+                document.querySelector('#iconCondition').className = strIconClass + " text-secondary";
+                document.querySelector('#txtCondition').innerText = objWeatherCodes[current.weather_code]
+                document.querySelector('#txtTemperature').innerText = Math.round(current.temperature_2m) + 'F'
+                document.querySelector('#txtHumidity').innerText = current.relative_humidity_2m + '%'
+                
+            })
+            .catch(objError => {
+                console.error("error: ", objError)
+            })
+
+    </script>
+</body>
+</html>
