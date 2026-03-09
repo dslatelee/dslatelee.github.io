@@ -64,6 +64,8 @@
                 }
             })
             .then(objData => {
+                // https://open-meteo.com/en/docs 
+                // This was created from the "WMO Weather interpretation codes" list at the end of the doc
                 const objWeatherCodes = {
                     0: 'Clear skies',
                     1: 'Mainly clear, partly cloudy, and overcast',
@@ -98,34 +100,34 @@
                 // this changes the weather icon based on the weather codes
                 // so that a sun displays when is clear, for example
                 const objWeatherIcons = {
-                    0: 'bi bi-brightness-high-fill', //'Clear sky',
-                    1: 'bi bi-cloud-sun-fill', //'Mainly clear, partly cloudy, and overcast',
-                    2: 'bi bi-cloud-sun-fill', //'Mainly clear, partly cloudy, and overcast',
-                    3: 'bi bi-cloud-sun-fill', //'Mainly clear, partly cloudy, and overcast',
-                    45: 'bi bi-cloud-fog2', //'Fog and depositing rime fog',
-                    48:	'bi bi-cloud-fog2', //'Fog and depositing rime fog',
-                    51: 'bi bi-cloud-drizzle-fill', //'Drizzle: Light, moderate, and dense intensit',
-                    53: 'bi bi-cloud-drizzle-fill', //'Drizzle: Light, moderate, and dense intensit',
-                    55:	'bi bi-cloud-drizzle-fill', //'Drizzle: Light, moderate, and dense intensit',
-                    56: 'bi bi-cloud-snow-fill', //'Freezing Drizzle: Light and dense intensity',
-                    57:	'bi bi-cloud-snow-fill', //'Freezing Drizzle: Light and dense intensity',
-                    61: 'bi bi-cloud-rain-fill', //'Rain: Slight, moderate and heavy intensity',
-                    63: 'bi bi-cloud-rain-fill', //'Rain: Slight, moderate and heavy intensity',
-                    65:	'bi bi-cloud-rain-fill', //'Rain: Slight, moderate and heavy intensity',
-                    66: 'bi bi-cloud-snow-fill', //'Freezing Rain: Light and heavy intensity',
-                    67:	'bi bi-cloud-snow-fill', //'Freezing Rain: Light and heavy intensity',
-                    71: 'bi bi-cloud-snow-fill', //'Snow fall: Slight, moderate, and heavy intensity',
-                    73: 'bi bi-cloud-snow-fill', //'Snow fall: Slight, moderate, and heavy intensity',
-                    75:	'bi bi-cloud-snow-fill', //'Snow fall: Slight, moderate, and heavy intensity',
-                    77:	'bi bi-cloud-snow-fill', //'Snow grains',
-                    80: 'bi bi-cloud-rain-fill', //'Rain showers: Slight, moderate, and violent',
-                    81: 'bi bi-cloud-rain-fill', //'Rain showers: Slight, moderate, and violent',
-                    82:	'bi bi-cloud-rain-fill', //'Rain showers: Slight, moderate, and violent',
-                    85: 'bi bi-cloud-snow-fill', //'Snow showers slight and heavy',
-                    86:	'bi bi-cloud-snow-fill', //'Snow showers slight and heavy',
-                    95:	'bi bi-cloud-lightning-rain-fill', //'Thunderstorm: Slight or moderate',
-                    96: 'bi bi-cloud-lightning-rain-fill', //'Thunderstorm with slight and heavy hail',
-                    99:	'bi bi-cloud-lightning-rain-fill', //'Thunderstorm with slight and heavy hail'
+                    0: 'bi bi-brightness-high-fill',
+                    1: 'bi bi-cloud-sun-fill',
+                    2: 'bi bi-cloud-sun-fill',
+                    3: 'bi bi-cloud-sun-fill',
+                    45: 'bi bi-cloud-fog2', 
+                    48:	'bi bi-cloud-fog2', 
+                    51: 'bi bi-cloud-drizzle-fill', 
+                    53: 'bi bi-cloud-drizzle-fill', 
+                    55:	'bi bi-cloud-drizzle-fill', 
+                    56: 'bi bi-cloud-snow-fill', 
+                    57:	'bi bi-cloud-snow-fill', 
+                    61: 'bi bi-cloud-rain-fill', 
+                    63: 'bi bi-cloud-rain-fill', 
+                    65:	'bi bi-cloud-rain-fill', 
+                    66: 'bi bi-cloud-snow-fill', 
+                    67:	'bi bi-cloud-snow-fill', 
+                    71: 'bi bi-cloud-snow-fill', 
+                    73: 'bi bi-cloud-snow-fill', 
+                    75:	'bi bi-cloud-snow-fill', 
+                    77:	'bi bi-cloud-snow-fill', 
+                    80: 'bi bi-cloud-rain-fill', 
+                    81: 'bi bi-cloud-rain-fill', 
+                    82:	'bi bi-cloud-rain-fill', 
+                    85: 'bi bi-cloud-snow-fill', 
+                    86:	'bi bi-cloud-snow-fill', 
+                    95:	'bi bi-cloud-lightning-rain-fill', 
+                    96: 'bi bi-cloud-lightning-rain-fill', 
+                    99:	'bi bi-cloud-lightning-rain-fill', 
                 }
 
                 const current = objData.current
