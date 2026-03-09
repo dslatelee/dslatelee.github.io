@@ -8,12 +8,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     
     <title>Clarksville Climate</title>
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-    <link href="css/lib/lux.min.css" rel="stylesheet">
+    <link href="css/yeti.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
@@ -23,9 +23,9 @@
         <div class="card col-10 col-md-6" id="divLogin" style="font-size:medium">
             <div class="card-body">
                 <h1 class="text-center mt-2 mb-4 border-bottom pb-4">Clarksville Climate</h1>
-                
+
                 <div class="row align-items-center mb-3 border-bottom pb-4">
-                    <div class="col-4 fs-5">Status:</div> 
+                    <div class="col-4 fs-2">Status:</div> 
                     <div class="col-5" id="txtCondition"></div>
                     <div class="col-1 fs-3"><i id="iconCondition" class=""></i></div>
                 </div>
@@ -125,7 +125,7 @@
                 const strIconClass = objWeatherIcons[current.weather_code]
                 document.querySelector('#iconCondition').className = strIconClass + " text-secondary";
                 document.querySelector('#txtCondition').innerText = objWeatherCodes[current.weather_code]
-                document.querySelector('#txtTemperature').innerText = Math.round(current.temperature_2m) + 'F'
+                document.querySelector('#txtTemperature').innerText = Math.round(current.temperature_2m) + '°F'
                 document.querySelector('#txtHumidity').innerText = current.relative_humidity_2m + '%'
                 
             })
